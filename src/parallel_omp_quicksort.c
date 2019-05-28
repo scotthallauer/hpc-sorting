@@ -8,6 +8,8 @@
 #include <omp.h>
 #include <stdio.h>
 
+static int PARALLEL_CUTOFF = 100;
+
 // swap values for two elements
 void swap(int* a, int* b)
 {
@@ -43,13 +45,13 @@ void isort(int arr[], int lo, int hi)
     if(lo < hi)
     {
         int pi = partition(arr, lo, hi);
-        if(((pi-1) - lo) > 100){
+        if(((pi-1) - lo) > PARALLEL_CUTOFF){
             #pragma omp task default(none) firstprivate(arr,lo,pi)
             isort(arr, lo, pi-1);
         }else{
             isort(arr, lo, pi-1);
         }
-        if((hi - (pi+1)) > 100){
+        if((hi - (pi+1)) > PARALLEL_CUTOFF){
             #pragma omp task default(none) firstprivate(arr,hi,pi)
             isort(arr, pi+1, hi);
         }else{
