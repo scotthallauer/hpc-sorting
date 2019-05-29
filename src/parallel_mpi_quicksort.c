@@ -1,19 +1,14 @@
 /**
  * Parallel Quicksort Algorithm (MPI)
  * Scott Hallauer
- * 28/05/2019
- * Adapted code from GeeksforGeeks (https://www.geeksforgeeks.org/cpp-program-for-quicksort/),
- * GeeksforGeeks (https://www.geeksforgeeks.org/merge-two-sorted-arrays/)
- * and eerpini (https://github.com/eerpini/Quick-Sort-MPI/blob/master/mpi_pqsort.c)
+ * 29/05/2019
  */
-#include <mpi.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <mpi.h>
 
 static int ROOT = 0;
-static int MSG_COUNT = 0;
-static int MSG_ARRAY = 1;
 
 // swap values for two elements
 void swap(int* a, int* b)
@@ -62,43 +57,42 @@ void quicksort(int arr[], int n)
     isort(arr, 0, n-1);
 }
 
-void divide(int arr[], int lo, int hi, int num_ranks, int start_rank){
-    if(num_ranks == 1)
+// merge different blocks of sorted numbers into a single sorted array
+void merge(int *src_arr, int num_blocks, int block_size, int *dest_arr)
+{
+    int dest_idx = 0;
+    int *block_idx;
+    block_idx = malloc(sizeof(int) * num_blocks);
+    for(int i = 0; i < num_blocks; i++)
+        block_idx[i] = 0;
+    bool done = false;
+    int min_val, min_block;
+    do 
     {
-        int count = hi-lo+1;
-        MPI_Send(&count, 1, MPI_INT, start_rank, MSG_COUNT, MPI_COMM_WORLD);
-        MPI_Send(arr + lo, count, MPI_INT, start_rank, MSG_ARRAY, MPI_COMM_WORLD);
-    }
-    else
-    {
-        int l_num_ranks = num_ranks/2;
-        int r_num_ranks = l_num_ranks;
-        if(num_ranks % 2 != 0)
-            r_num_ranks = l_num_ranks + 1;
-        int r_start_rank = start_rank + l_num_ranks;
-        if(lo < hi)
+        min_val = src_arr[block_idx[0]];
+        min_block = 0;
+        for(int i = 1; i < num_blocks; i++)
         {
-            int pi = partition(arr, lo, hi);
-            divide(arr, lo, pi, l_num_ranks, start_rank);
-            divide(arr, pi+1, hi, r_num_ranks, r_start_rank);
+            if(src_arr[block_idx[i]] < min_val)
+            {
+                min_val = src_arr[block_idx[i]];
+                min_block = i;
+            }
+        }    
+        dest_arr[dest_idx++] = src_arr[block_idx[min_block]++];
+        for(int i = 0; i < num_blocks; i++)
+        {
+            if(block_idx[i] >= block_size)
+            {
+                done = true;
+                break;
+            }
         }
     }
-}
-
-void merge(int arr1[], int n1, int arr2[], int n2, int arr3[])
-{
-    int i1 = 0, i2 = 0, i3 = 0;
-    while(i1 < n1 && i2 < n2)
-    {
-        if(arr1[i1] < arr2[i2])
-            arr3[i3++] = arr1[i1++];
-        else
-            arr3[i3++] = arr2[i2++];
-    }
-    while(i1 < n1)
-        arr3[i3++] = arr1[i1++];
-    while(i2 < n2)
-        arr3[i3++] = arr2[i2++];
+    while(!done);
+    for(int i = 0; i < num_blocks; i++)
+        while(block_idx[i] < block_size)
+            dest_arr[dest_idx++] = src_arr[block_idx[i]++];
 }
 
 // validates that an array of integers is sorted
@@ -114,25 +108,24 @@ bool validate(int arr[], int n)
     return true;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char** argv) {
     double start, finish;
-    int rank, size, n;
-    int *original_arr;
-    int *local_arr;
-    int *sorted_arr;
-    int *arr1; 
-    int *arr2;
-    MPI_Init(&argc, &argv);
+    int n, m;
+    int rank, size;
+
+    MPI_Init(NULL, NULL);
+
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    if(rank == ROOT)
-    {
+
+    int *original_arr = NULL;
+    if (rank == ROOT) {
         // Get input data
         FILE *input = fopen("numbers.txt", "r");
         char line[10];
         fgets(line, 10, input);
         sscanf(line, "%d", &n);
+        m = n/size;
         original_arr = malloc(n * sizeof(int));
         for(int i = 0; i < n; i++)
         {
@@ -140,74 +133,45 @@ int main(int argc, char *argv[])
             sscanf(line, "%d", &original_arr[i]);
         }
         start = MPI_Wtime();
-        //divide(arr, 0, n-1, size-1, 1);
     }
-    /*
-    else
-    {
-        int n;
-        MPI_Status status;
-        MPI_Recv(&n, 1, MPI_INT, MASTER, MSG_COUNT, MPI_COMM_WORLD, &status);
-        printf("Process %d is receiving %d items.\n", rank, n);
-        int *arr2;
-        arr2 = malloc(n * sizeof(int));
-        MPI_Recv(arr2, n, MPI_INT, MASTER, MSG_ARRAY, MPI_COMM_WORLD, &status);
-        quicksort(arr2, n);
-    }
-    */
-    int m = n/size;
-    local_arr = malloc(m * sizeof(int));
-    MPI_Scatter(original_arr, m, MPI_INT, local_arr, m, MPI_INT, ROOT, MPI_COMM_WORLD);
-    quicksort(local_arr, m);
-    MPI_Request *request;
-    request = malloc(size * sizeof(MPI_Request));
-    MPI_Isend(local_arr, m, MPI_INT, ROOT, 0, MPI_COMM_WORLD, &request[rank]);
+    MPI_Bcast(&n, 1, MPI_INT, ROOT, MPI_COMM_WORLD);
+    MPI_Bcast(&m, 1, MPI_INT, ROOT, MPI_COMM_WORLD);
 
-    if(rank == ROOT)
+    int *local_arr = (int *)malloc(sizeof(int) * m);
+
+    MPI_Scatter(original_arr, m, MPI_INT, local_arr, m, MPI_INT, ROOT, MPI_COMM_WORLD);
+
+    quicksort(local_arr, m);
+
+    int *sorted_arr = NULL;
+    if (rank == ROOT)
+        sorted_arr = (int *)malloc(sizeof(int) * n);
+    MPI_Gather(local_arr, m, MPI_INT, sorted_arr, m, MPI_INT, ROOT, MPI_COMM_WORLD);
+    
+    free(local_arr);
+    
+    if (rank == ROOT)
     {
-        MPI_Status status;
-        sorted_arr = malloc(m * sizeof(int));
-        MPI_Recv(sorted_arr, m, MPI_INT, ROOT, 0, MPI_COMM_WORLD, &status);
-        int received = 1;
-        //int *flag;
-        //flag = malloc(size * sizeof(int));
-        int flag;
-        bool *done;
-        done = malloc(size * sizeof(bool));
-        done[0] = true;
-        for(int i = 1; i < size; i++)
-        {
-            done[i] = false;
-        }
-        while(received < 2)
-        {
-            for(int i = 0; i < size; i++)
-            {
-                if(!done[i])
-                {
-                    MPI_Test(&request[i], &flag, &status);
-                    //if(flag[i])
-                    if(flag)
-                    {
-                        //arr2 = malloc(m * sizeof(int));
-                        MPI_Recv(arr2, m, MPI_INT, ROOT, i, MPI_COMM_WORLD, &status);
-                        //done[i] = true;
-                        received++;
-                    }
-                }
-            }
-        }/*
-        for(int i = 1; i < size; i++)
-        {
-            arr1 = sorted_arr;
-            arr2 = malloc(m * sizeof(int));
-            MPI_Recv(arr2, m, MPI_INT, ROOT, i, MPI_COMM_WORLD, &status);
-            sorted_arr = malloc((i+1) * m * sizeof(int));
-            merge(arr1, m, arr2, m, sorted_arr);
-        }*/
+        free(original_arr);
+        int *merged_arr = (int *)malloc(sizeof(int) * n);
+        merge(sorted_arr, size, m, merged_arr);
         finish = MPI_Wtime();
-        printf("Sorted in %f seconds\n", (finish-start));
-    }
-    MPI_Finalize();
-    return 0;
+        // Output execution time
+        if(validate(merged_arr, n))
+        {
+            printf("Sorted in %f seconds.\n", (finish-start));
+        }
+        else
+        {
+            printf("Sorting failed.\n");
+        }
+  }
+
+  // Clean up
+  if (rank == ROOT) {
+    free(sorted_arr);
+  }
+
+  MPI_Barrier(MPI_COMM_WORLD);
+  MPI_Finalize();
 }
