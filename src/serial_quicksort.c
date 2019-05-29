@@ -6,9 +6,10 @@
  */
 #include <omp.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 // swap values for two elements
-void swap(int* a, int* b)
+void swap(long long *a, long long *b)
 {
     int temp = *a;
     *a = *b;
@@ -17,7 +18,7 @@ void swap(int* a, int* b)
 
 // take last element in range and place in correct position for sorted array 
 // (with smaller values to the left and larger to the right)
-int partition(int arr[], int lo, int hi)
+int partition(long long *arr, int lo, int hi)
 {
     int pivot = arr[hi];
     int i = (lo-1);
@@ -37,7 +38,7 @@ int partition(int arr[], int lo, int hi)
 
 // internal sorting function which implements the quicksort algorithm
 // (i.e. partition and then sort left and right sides)
-void isort(int arr[], int lo, int hi)
+void isort(long long *arr, int lo, int hi)
 {
     if(lo < hi)
     {
@@ -49,17 +50,22 @@ void isort(int arr[], int lo, int hi)
 
 // external sorting function which takes an array and its size, and sorts it using the quicksort algorithm
 // (using the isort method).
-void quicksort(int arr[], int n)
+void quicksort(long long *arr, int n)
 {
     isort(arr, 0, n-1);
 }
 
-// prints out an array of integers
-void display(int arr[], int n)
+// validates that an array of integers is sorted
+bool validate(long long *arr, int n)
 {
-    for(int i = 0; i < n; i++){
-        printf("%d\n", arr[i]);
+    for(int i = 0; i < n-1; i++)
+    {
+        if(arr[i] > arr[i+1])
+        {
+            return false;
+        }
     } 
+    return true;
 }
 
 int main()
@@ -71,17 +77,25 @@ int main()
     int n;
     fgets(line, 10, input);
     sscanf(line, "%d", &n);
-    int *arr;
-    arr = (int *)malloc(n * sizeof(int));
+    long long *arr;
+    arr = malloc(n * sizeof(long long));
     for(int i = 0; i < n; i++)
     {
         fgets(line, 10, input);
-        sscanf(line, "%d", &arr[i]);
+        sscanf(line, "%lld", &arr[i]);
     }
     // Run sorting algorithm
     start = omp_get_wtime();
     quicksort(arr, n);
     finish = omp_get_wtime();
     // Output execution time
-    printf("Sorted in %f seconds\n", (finish-start));
+    if(validate(arr, n))
+    {
+        printf("Sorted in %f seconds.\n", (finish-start));
+    }
+    else
+    {
+        printf("Sorting failed.\n");
+    }
+    return 0;
 }
