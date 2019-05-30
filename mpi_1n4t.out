@@ -1,0 +1,347 @@
+===== 1000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.045633 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.052456 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.044558 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.048900 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.044580 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.054999 seconds.
+===== 5000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.045042 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.056781 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.042496 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.055862 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.045772 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.056056 seconds.
+===== 10000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.045976 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.050386 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.046036 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.056498 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.045862 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+--------------------------------------------------------------------------
+A system call failed during shared memory initialization that should
+not have.  It is likely that your MPI job will now either abort or
+experience performance degradation.
+
+  Local host:  srvcnthpc600.uct.ac.za
+  System call: open(2) 
+  Error:       Permission denied (errno 13)
+--------------------------------------------------------------------------
+Sorted in 0.056789 seconds.
+[srvcnthpc600.uct.ac.za:38833] 2 more processes have sent help message help-opal-shmem-mmap.txt / sys call fail
+[srvcnthpc600.uct.ac.za:38833] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+===== 50000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.051165 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.070361 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.051556 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.058669 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.046490 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.062230 seconds.
+===== 100000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.062277 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.058408 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.060964 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+--------------------------------------------------------------------------
+A system call failed during shared memory initialization that should
+not have.  It is likely that your MPI job will now either abort or
+experience performance degradation.
+
+  Local host:  srvcnthpc600.uct.ac.za
+  System call: open(2) 
+  Error:       Permission denied (errno 13)
+--------------------------------------------------------------------------
+Sorted in 0.059366 seconds.
+[srvcnthpc600.uct.ac.za:39528] 2 more processes have sent help message help-opal-shmem-mmap.txt / sys call fail
+[srvcnthpc600.uct.ac.za:39528] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.062442 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.059105 seconds.
+===== 500000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.154805 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.108741 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.155064 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.109087 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.154485 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.108351 seconds.
+===== 1000000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.252768 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.173969 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.262459 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.176037 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.251276 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.168516 seconds.
+===== 5000000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 1.156982 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.663611 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 1.143219 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.671266 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 1.152289 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 0.676525 seconds.
+===== 10000000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 2.381691 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 1.359541 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 2.320587 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 1.359672 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 2.310014 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 1.361260 seconds.
+===== 25000000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 6.172222 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 3.386942 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 6.031063 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 3.688679 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 5.939208 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 3.386730 seconds.
+===== 50000000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 13.499957 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 6.726387 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 13.183498 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 6.970166 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 13.473735 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 6.598889 seconds.
+===== 75000000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 21.432890 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 10.215651 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 21.050483 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 10.295557 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 21.528781 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 10.075433 seconds.
+===== 100000000 =====
+MPI Quicksort #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 30.136114 seconds.
+MPI Regular Sampling #1:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 13.679839 seconds.
+MPI Quicksort #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 30.485485 seconds.
+MPI Regular Sampling #2:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 13.597538 seconds.
+MPI Quicksort #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 30.548856 seconds.
+MPI Regular Sampling #3:
+vsetenv PMIX_SERVER_TMPDIR failed
+vsetenv PMIX_SERVER_TMPDIR failed
+Sorted in 14.042974 seconds.

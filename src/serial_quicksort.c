@@ -2,11 +2,17 @@
  * Serial Recursive Quicksort Algorithm 
  * Scott Hallauer
  * 25/05/2019
- * Adapted code from GeeksforGeeks (https://www.geeksforgeeks.org/cpp-program-for-quicksort/)
  */
 #include <omp.h>
 #include <stdio.h>
 #include <stdbool.h>
+
+double start, finish;
+
+/******************************************
+ *   SERIAL QUICKSORT ALGORITHM - START   *
+ ******************************************/
+// Code from GeeksforGeeks (https://www.geeksforgeeks.org/cpp-program-for-quicksort/)
 
 // swap values for two elements
 void swap(long long *a, long long *b)
@@ -54,25 +60,35 @@ void quicksort(long long *arr, int n)
 {
     isort(arr, 0, n-1);
 }
+/****************************************
+ *   SERIAL QUICKSORT ALGORITHM - END   *
+ ****************************************/
 
-// validates that an array of integers is sorted
+// validates that an array of integers is sorted correctly
 bool validate(long long *arr, int n)
 {
     for(int i = 0; i < n-1; i++)
     {
         if(arr[i] > arr[i+1])
         {
+            printf("ERROR: Validation failed at element %d\n", i);
             return false;
         }
     } 
     return true;
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    // Get input data
-    double start, finish;
-    FILE *input = fopen("numbers.txt", "r");
+    // CHECK ARUGMENTS //
+    if(argc != 2 || argv[1] == NULL)
+    {
+        printf("ERROR: Usage serial_quicksort <input_file>\n");
+        exit(1);
+    }
+
+    // READ INPUT DATA //
+    FILE *input = fopen(argv[1], "r");
     char line[10];
     int n;
     fgets(line, 10, input);
@@ -84,18 +100,18 @@ int main()
         fgets(line, 10, input);
         sscanf(line, "%lld", &arr[i]);
     }
-    // Run sorting algorithm
+
+    // RUN SORTING ALGORITHM //
     start = omp_get_wtime();
     quicksort(arr, n);
     finish = omp_get_wtime();
-    // Output execution time
+
+    // OUTPUT EXECUTION TIME //
     if(validate(arr, n))
-    {
-        printf("Sorted in %f seconds.\n", (finish-start));
-    }
-    else
-    {
-        printf("Sorting failed.\n");
-    }
+        printf("%f\n", (finish-start));
+
+    // CLEAN UP //
+    free(arr);
+    
     return 0;
 }

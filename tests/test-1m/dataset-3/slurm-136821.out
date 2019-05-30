@@ -1,0 +1,15 @@
+===== 2 Threads =====
+OpenMP Quicksort:
+Sorted in 0.424694 seconds.
+OpenMP Regular Sampling:
+Sorted in 0.376212 seconds.
+===== 4 Threads =====
+OpenMP Quicksort:
+Sorted in 0.247039 seconds.
+OpenMP Regular Sampling:
+Sorted in 0.189453 seconds.
+===== 8 Threads =====
+OpenMP Quicksort:
+Sorted in 0.148056 seconds.
+OpenMP Regular Sampling:
+Sorted in 0.095668 seconds.

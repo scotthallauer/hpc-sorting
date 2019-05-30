@@ -1,0 +1,36 @@
+MPI Quicksort:
+vsetenv PMIX_SERVER_TMPDIR failed
+--------------------------------------------------------------------------
+WARNING: One or more nonexistent OpenFabrics devices/ports were
+specified:
+
+  Host:                 srvcnthpc605
+  MCA parameter:        mca_btl_if_include
+  Nonexistent entities: mlx5_0:1
+
+These entities will be ignored.  You can disable this warning by
+setting the btl_openib_warn_nonexistent_if MCA parameter to 0.
+--------------------------------------------------------------------------
+vsetenv PMIX_SERVER_TMPDIR failed
+[srvcnthpc600.uct.ac.za:25366] 3 more processes have sent help message help-mpi-btl-openib.txt / nonexistent port
+[srvcnthpc600.uct.ac.za:25366] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+Sorted in 32.618088 seconds.
+MPI Regular Sampling:
+vsetenv PMIX_SERVER_TMPDIR failed
+--------------------------------------------------------------------------
+WARNING: One or more nonexistent OpenFabrics devices/ports were
+specified:
+
+  Host:                 srvcnthpc605
+  MCA parameter:        mca_btl_if_include
+  Nonexistent entities: mlx5_0:1
+
+These entities will be ignored.  You can disable this warning by
+setting the btl_openib_warn_nonexistent_if MCA parameter to 0.
+--------------------------------------------------------------------------
+vsetenv PMIX_SERVER_TMPDIR failed
+[srvcnthpc600.uct.ac.za:25823] 1 more process has sent help message help-mpi-btl-openib.txt / nonexistent port
+[srvcnthpc600.uct.ac.za:25823] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+[srvcnthpc600.uct.ac.za:25823] 1 more process has sent help message help-mpi-btl-openib.txt / nonexistent port
+[srvcnthpc600.uct.ac.za:25823] 1 more process has sent help message help-mpi-btl-openib.txt / nonexistent port
+Sorted in 14.544455 seconds.

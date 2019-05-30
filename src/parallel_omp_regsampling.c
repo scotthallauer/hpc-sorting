@@ -11,6 +11,82 @@
 #include <string.h>
 #include <math.h>
 
+double start, finish;
+
+/******************************************
+ *   SERIAL QUICKSORT ALGORITHM - START   *
+ ******************************************/
+// Code from GeeksforGeeks (https://www.geeksforgeeks.org/cpp-program-for-quicksort/)
+// Used for validation
+
+// swap values for two elements
+void swap(long long *a, long long *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// take last element in range and place in correct position for sorted array 
+// (with smaller values to the left and larger to the right)
+int partition(long long *arr, int lo, int hi)
+{
+    int pivot = arr[hi];
+    int i = (lo-1);
+
+    for(int j = lo; j <= hi-1; j++)
+    {
+        if(arr[j] <= pivot)
+        {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    swap(&arr[i+1], &arr[hi]);
+    return (i+1);
+}
+
+// internal sorting function which implements the quicksort algorithm
+// (i.e. partition and then sort left and right sides)
+void isort(long long *arr, int lo, int hi)
+{
+    if(lo < hi)
+    {
+        int pi = partition(arr, lo, hi);
+        isort(arr, lo, pi-1);
+        isort(arr, pi+1, hi);
+    }
+}
+
+// external sorting function which takes an array and its size, and sorts it using the quicksort algorithm
+// (using the isort method).
+void quicksort(long long *arr, int n)
+{
+    isort(arr, 0, n-1);
+}
+/****************************************
+ *   SERIAL QUICKSORT ALGORITHM - END   *
+ ****************************************/
+
+// validates that an array of integers is sorted correctly
+bool validate(long long *original_arr, long long *final_arr, int n)
+{
+    quicksort(original_arr, n);
+    for(int i = 0; i < n; i++)
+    {
+        if(original_arr[i] != final_arr[i])
+        {
+            printf("ERROR: Validation failed at element %d - expected %lld but found %lld\n", i, original_arr[i], final_arr[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
+/****************************
+ *    OMP PSRS ALGORITHM    *
+ ****************************/
 /* headers */
 int lcompare(const void * ptr2num1, const void * ptr2num2);
 long long *merge(long long * left, long long * right, int l_end, int r_end);
@@ -313,24 +389,17 @@ void insertion_sort(long long *arr, int n){
 	}
 }
 
-// validates that an array of integers is sorted
-bool validate(long long *arr, int n)
+int main(int argc, char **argv)
 {
-    for(int i = 0; i < n-1; i++)
+    // CHECK ARUGMENTS //
+    if(argc != 2 || argv[1] == NULL)
     {
-        if(arr[i] > arr[i+1])
-        {
-            return false;
-        }
-    } 
-    return true;
-}
+        printf("ERROR: Usage parallel_omp_regsampling <input_file>\n");
+        exit(1);
+    }
 
-int main()
-{
-    // Get input data
-    double start, finish;
-    FILE *input = fopen("numbers.txt", "r");
+    // READ INPUT DATA //
+    FILE *input = fopen(argv[1], "r");
     char line[10];
     int n;
     fgets(line, 10, input);
@@ -342,18 +411,23 @@ int main()
         fgets(line, 10, input);
         sscanf(line, "%lld", &arr[i]);
     }
-    // Run sorting algorithm
+    long long *original_arr;
+    original_arr = malloc(n * sizeof(long long));
+    for(int i = 0; i < n; i++)
+      original_arr[i] = arr[i];
+
+    // RUN SORTING ALGORITHM //
     start = omp_get_wtime();
     psrs_sort(arr, n);
     finish = omp_get_wtime();
-    // Output execution time
-    if(validate(arr, n))
-    {
-        printf("Sorted in %f seconds.\n", (finish-start));
-    }
-    else
-    {
-        printf("Sorting failed.\n");
-    }
+
+    // OUTPUT EXECUTION TIME //
+    if(validate(original_arr, arr, n))
+        printf("%f\n", (finish-start));
+
+    // CLEAN UP //
+    free(original_arr);
+    free(arr);
+
     return 0;
 }

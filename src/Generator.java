@@ -2,19 +2,14 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Generator {
 
     public static String FILENAME = "numbers.txt";
     public static void main (String[] args) throws IOException {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Total numbers to generate: ");
-        int n = input.nextInt();
-        System.out.print("Minimum value: ");
-        int min = input.nextInt();
-        System.out.print("Maximum value: ");
-        int max = input.nextInt();
+        int n = Integer.parseInt(args[0]);
+        int min = Integer.parseInt(args[1]);
+        int max = Integer.parseInt(args[2]);
 
         BufferedWriter output = new BufferedWriter(new FileWriter(FILENAME));
         output.write(String.valueOf(n));

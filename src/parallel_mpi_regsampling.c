@@ -11,29 +11,90 @@
 #include <assert.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <string.h>
 #include "mpi.h"
 
-int i,j,k,p,myId;
+int i, j, k, p, myId;
 double start, finish;
 
+/******************************************
+ *   SERIAL QUICKSORT ALGORITHM - START   *
+ ******************************************/
+// Code from GeeksforGeeks (https://www.geeksforgeeks.org/cpp-program-for-quicksort/)
+// Used for validation
 
+// swap values for two elements
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// take last element in range and place in correct position for sorted array 
+// (with smaller values to the left and larger to the right)
+int partition(int *arr, int lo, int hi)
+{
+    int pivot = arr[hi];
+    int i = (lo-1);
+
+    for(int j = lo; j <= hi-1; j++)
+    {
+        if(arr[j] <= pivot)
+        {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    swap(&arr[i+1], &arr[hi]);
+    return (i+1);
+}
+
+// internal sorting function which implements the quicksort algorithm
+// (i.e. partition and then sort left and right sides)
+void isort(int *arr, int lo, int hi)
+{
+    if(lo < hi)
+    {
+        int pi = partition(arr, lo, hi);
+        isort(arr, lo, pi-1);
+        isort(arr, pi+1, hi);
+    }
+}
+
+// external sorting function which takes an array and its size, and sorts it using the quicksort algorithm
+// (using the isort method).
+void quicksort(int *arr, int n)
+{
+    isort(arr, 0, n-1);
+}
+/****************************************
+ *   SERIAL QUICKSORT ALGORITHM - END   *
+ ****************************************/
+
+// validates that an array of integers is sorted correctly
+bool validate(int *original_arr, int *final_arr, int n)
+{
+    quicksort(original_arr, n);
+    for(int i = 0; i < n; i++)
+    {
+        if(original_arr[i] != final_arr[i])
+        {
+            printf("ERROR: Validation failed at element %d - expected %d but found %d\n", i, original_arr[i], final_arr[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
+/****************************
+ *    MPI PSRS ALGORITHM    *
+ ****************************/
 int cmp(const void * a, const void * b) {
   if (*(int*)a < *(int*)b) return -1;
   if (*(int*)a > *(int*)b) return 1;
   else return 0;
-}
-
-// validates that an array of integers is sorted
-bool validate(int *arr, int n)
-{
-    for(int i = 0; i < n-1; i++)
-    {
-        if(arr[i] > arr[i+1])
-        {
-            return false;
-        }
-    } 
-    return true;
 }
 
 void phase1(int *array, int N, int startIndex, int subArraySize, int *pivots, int p) {
@@ -157,8 +218,16 @@ void psrs_mpi(int *array, int N)
     int *partitionSizes, *newPartitionSizes, nameLength;
     int subArraySize, startIndex, endIndex, *pivots, *newPartitions;
     char processorName[MPI_MAX_PROCESSOR_NAME];
+    int *original_arr;
+    original_arr = malloc(N * sizeof(int));
+    for(int i = 0; i < N; i++)
+      original_arr[i] = array[i];
 
     MPI_Get_processor_name(processorName,&nameLength);
+
+    if(myId == 0)
+        // START TIMING //
+        start = MPI_Wtime();
 
     pivots = (int *) malloc(p*sizeof(int));
     partitionSizes = (int *) malloc(p*sizeof(int));
@@ -183,6 +252,16 @@ void psrs_mpi(int *array, int N)
       phase3(array, startIndex, partitionSizes, &newPartitions, newPartitionSizes, p);
       phase4(newPartitions, newPartitionSizes, p, myId, array);
     }
+
+    if(myId == 0)
+    {
+        // STOP TIMING //
+        finish = MPI_Wtime();
+        // Output execution time
+        if(validate(original_arr, array, N))
+          printf("%f\n", (finish-start));
+    }
+
     if (p > 1) {
       free(newPartitions);
     }
@@ -190,29 +269,22 @@ void psrs_mpi(int *array, int N)
     free(newPartitionSizes);
     free(pivots);
 
-    if(myId == 0)
-    {
-        finish = MPI_Wtime();
-        // Output execution time
-        if(validate(array, N))
-        {
-            printf("Sorted in %f seconds.\n", (finish-start));
-        }
-        else
-        {
-            printf("Sorting failed.\n");
-        }
-    }
-
-  free(array);
-  MPI_Finalize();
+    free(array);
+    MPI_Finalize();
 
 }
 
-int main(int argc, char *argv[]) {
-    // Get input data
-    double start, finish;
-    FILE *input = fopen("numbers.txt", "r");
+int main(int argc, char **argv) 
+{
+    // CHECK ARUGMENTS //
+    if(argc != 2 || argv[1] == NULL)
+    {
+        printf("ERROR: Usage parallel_mpi_regsampling <input_file>\n");
+        exit(1);
+    }
+
+    // READ INPUT DATA //
+    FILE *input = fopen(argv[1], "r");
     char line[10];
     int n;
     fgets(line, 10, input);
@@ -224,12 +296,16 @@ int main(int argc, char *argv[]) {
         fgets(line, 10, input);
         sscanf(line, "%d", &arr[i]);
     }
-    // Run sorting algorithm
-    MPI_Init(&argc,&argv);
+    int *original_arr;
+    original_arr = malloc(n * sizeof(int));
+    for(int i = 0; i < n; i++)
+      original_arr[i] = arr[i];
+
+    // RUN SORTING ALGORITHM //
+    MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD,&p);
     MPI_Comm_rank(MPI_COMM_WORLD,&myId);
-    if(myId == 0)
-        start = MPI_Wtime();
     psrs_mpi(arr,n);
+
     return 0;
 }
