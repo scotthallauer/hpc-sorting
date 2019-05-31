@@ -296,10 +296,6 @@ int main(int argc, char **argv)
         fgets(line, 10, input);
         sscanf(line, "%d", &arr[i]);
     }
-    int *original_arr;
-    original_arr = malloc(n * sizeof(int));
-    for(int i = 0; i < n; i++)
-      original_arr[i] = arr[i];
 
     // RUN SORTING ALGORITHM //
     MPI_Init(&argc, &argv);

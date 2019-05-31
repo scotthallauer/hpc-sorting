@@ -1,0 +1,15 @@
+HPC Assignment: Parallel Sorting in OpenMP and MPI
+Scott Hallauer
+31/05/2019
+
+The source code for the various sorting algorithms, as well as the random number generator, can be found in the ./src/ directory. Please note that all programs contain a Quicksort function but in the PSRS programs this is just used for validation.
+
+The job batch scripts used to run experiments on the HPC cluster can be found in the ./jobs/ directory.
+
+The raw experimental test results can be found in the ./tests/ directory.
+
+To compile the code, run "make" on the HPC cluster.
+
+To run the experimental tests, run "make serial", "make omp" and "make mpi" on the HPC cluster.
+
+To clean the bin folder, run "make clean" on the HPC cluster.

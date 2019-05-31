@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "iostream": "cpp",
-        "chrono": "cpp",
-        "stdio.h": "c",
-        "stdlib.h": "c",
-        "quicksort.h": "c"
-    }
-}
