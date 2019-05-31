@@ -10,6 +10,6 @@ The raw experimental test results can be found in the ./tests/ directory.
 
 To compile the code, run "make" on the HPC cluster.
 
-To run the experimental tests, run "make serial", "make omp" and "make mpi" on the HPC cluster.
+To run the experimental tests, run "make serial", "make omp" and "make mpi" on the HPC cluster. Please note that these jobs are configured to run successfully when this code directory is located on my cluster account (hpc07) at the following location: "/home/hpc07/sorting/". If you would like to run them on another account, please change the #SBATCH --output and #SBATCH --error locations in all the job files accordingly.
 
 To clean the bin folder, run "make clean" on the HPC cluster.

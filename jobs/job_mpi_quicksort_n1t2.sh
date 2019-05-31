@@ -24,8 +24,8 @@
 #SBATCH --mail-user=HLLSCO001@myuct.ac.za
 #SBATCH --mail-type=BEGIN,END,FAIL
 
-#SBATCH --output=../tests/out_mpi_quicksort_n1t2.txt
-#SBATCH --error=../tests/err_mpi_quicksort_n1t2.txt
+#SBATCH --output=/home/hpc07/sorting/tests/out_mpi_quicksort_n1t2.txt
+#SBATCH --error=/home/hpc07/sorting/tests/err_mpi_quicksort_n1t2.txt
 
 # NB, for more information read https://computing.llnl.gov/linux/slurm/sbatch.html
 
@@ -39,12 +39,12 @@ export OMPI_MCA_btl_openib_warn_nonexistent_if=0
 
 for j in 10 100 500 1000 5000 10000 50000 100000 500000 1000000 5000000 10000000 25000000 50000000 75000000 100000000
 do
-    java -cp ../bin Generator ../bin/numbers_mpi_quicksort_n1t2.txt $j
+    java -cp bin Generator bin/numbers_mpi_quicksort_n1t2.txt $j
     for i in {1..3}
     do
         echo "$j [$i]"
-        mpiexec -n 2 ../bin/parallel_mpi_quicksort ../bin/numbers_mpi_quicksort_n1t2.txt
+        mpiexec -n 2 bin/parallel_mpi_quicksort bin/numbers_mpi_quicksort_n1t2.txt
     done
 done
 
-rm ../bin/numbers_mpi_quicksort_n1t2.txt
+rm bin/numbers_mpi_quicksort_n1t2.txt

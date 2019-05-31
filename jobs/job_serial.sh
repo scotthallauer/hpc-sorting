@@ -24,8 +24,8 @@
 #SBATCH --mail-user=HLLSCO001@myuct.ac.za
 #SBATCH --mail-type=BEGIN,END,FAIL
 
-#SBATCH --output=../tests/out_serial.txt
-#SBATCH --error=../tests/err_serial.txt
+#SBATCH --output=/home/hpc07/sorting/tests/out_serial.txt
+#SBATCH --error=/home/hpc07/sorting/tests/err_serial.txt
 
 # NB, for more information read https://computing.llnl.gov/linux/slurm/sbatch.html
 
@@ -35,12 +35,12 @@
 
 for j in 10 100 500 1000 5000 10000 50000 100000 500000 1000000 5000000 10000000 25000000 50000000 75000000 100000000
 do
-    java -cp ../bin Generator ../bin/numbers_serial.txt $j
+    java -cp bin Generator bin/numbers_serial.txt $j
     for i in {1..3}
     do
         echo "$j [$i]"
-        ../bin/serial_quicksort ../bin/numbers_serial.txt
+        bin/serial_quicksort bin/numbers_serial.txt
     done
 done
 
-rm ../bin/numbers_serial.txt
+rm bin/numbers_serial.txt

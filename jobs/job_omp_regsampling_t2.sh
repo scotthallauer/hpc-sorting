@@ -24,8 +24,8 @@
 #SBATCH --mail-user=HLLSCO001@myuct.ac.za
 #SBATCH --mail-type=BEGIN,END,FAIL
 
-#SBATCH --output=../tests/out_omp_regsampling_t2.txt
-#SBATCH --error=../tests/err_omp_regsampling_t2.txt
+#SBATCH --output=/home/hpc07/sorting/tests/out_omp_regsampling_t2.txt
+#SBATCH --error=/home/hpc07/sorting/tests/err_omp_regsampling_t2.txt
 
 # NB, for more information read https://computing.llnl.gov/linux/slurm/sbatch.html
 
@@ -37,12 +37,12 @@ export OMP_NUM_THREADS=2
 
 for j in 10 100 500 1000 5000 10000 50000 100000 500000 1000000 5000000 10000000 25000000 50000000 75000000 100000000
 do
-    java -cp ../bin Generator ../bin/numbers_omp_regsampling_t2.txt $j
+    java -cp bin Generator bin/numbers_omp_regsampling_t2.txt $j
     for i in {1..3}
     do
         echo "$j [$i]"
-        ../bin/parallel_omp_regsampling ../bin/numbers_omp_regsampling_t2.txt
+        bin/parallel_omp_regsampling bin/numbers_omp_regsampling_t2.txt
     done
 done
 
-rm ../bin/numbers_omp_regsampling_t2.txt
+rm bin/numbers_omp_regsampling_t2.txt
